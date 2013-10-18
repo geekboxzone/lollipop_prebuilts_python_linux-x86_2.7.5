@@ -31,7 +31,7 @@ installed_prefix ()
     echo $RESULT
 }
 
-prefix_build="/tmp/ndk-andrewhsieh/buildhost/install/prebuilt/linux-x86_64"
+prefix_build="/tmp/ndk-andrewhsieh/buildhost/install/prebuilt/linux-x86"
 prefix_real=$(installed_prefix "$0")
 
 # Use sed to fix paths from their built to locations to their installed to locations.
@@ -50,11 +50,11 @@ ABIFLAGS="@ABIFLAGS@"
 if [ "$ABIFLAGS" = "@ABIFLAGS@" ] ; then
     ABIFLAGS=
 fi
-LIBS="-lpthread -ldl  -lutil $SYSLIBS -lpython${VERSION}${ABIFLAGS}"
+LIBS="-lpthread -ldl  -lpthread -lutil $SYSLIBS -lpython${VERSION}${ABIFLAGS}"
 BASECFLAGS=" -fno-strict-aliasing"
 LDLIBRARY="libpython${VERSION}.a"
 LINKFORSHARED="-Xlinker -export-dynamic"
-OPT="-DNDEBUG "
+OPT="-DNDEBUG -fwrapv -O3 -Wall -Wstrict-prototypes"
 PY_ENABLE_SHARED="0"
 DLLLIBRARY=""
 LIBDEST=${prefix}/lib/python${VERSION}

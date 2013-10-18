@@ -1,4 +1,4 @@
-#!/tmp/ndk-andrewhsieh/buildhost/install/prebuilt/linux-x86_64/bin/python2.7
+#!/tmp/ndk-andrewhsieh/buildhost/install/prebuilt/linux-x86/bin/python2.7
 """An RFC 2821 smtp proxy.
 
 Usage: %(program)s [options] [localhost:localport [remotehost:remoteport]]
