@@ -30,16 +30,16 @@ srcdir=		/s/ndk-toolchain/src/python/Python-2.7.5
 VPATH=		/s/ndk-toolchain/src/python/Python-2.7.5
 MSYSVPATH=	/s/ndk-toolchain/src/python/Python-2.7.5
 abs_srcdir=	/s/ndk-toolchain/src/python/Python-2.7.5
-abs_builddir=	/tmp/ndk-andrewhsieh/buildhost/build-python-linux-x86_64-2.7.5
+abs_builddir=	/tmp/ndk-andrewhsieh/buildhost/build-python-linux-x86-2.7.5
 build=		x86_64-pc-linux-gnu
-host=		x86_64-pc-linux-gnu
+host=		i686-pc-linux-gnu
 
-CC=		x86_64-linux-gnu-gcc -pthread
-CXX=		x86_64-linux-gnu-g++ -pthread
+CC=		i686-linux-gnu-gcc
+CXX=		i686-linux-gnu-g++
 MAINCC=		$(CC)
 LINKCC=		$(PURIFY) $(MAINCC)
-AR=		x86_64-linux-gnu-ar
-RANLIB=		x86_64-linux-gnu-ranlib
+AR=		i686-linux-gnu-ar
+RANLIB=		i686-linux-gnu-ranlib
 SVNVERSION=	svnversion $(srcdir)
 HGVERSION=	hg id -i $(srcdir)
 HGTAG=		hg id -t $(srcdir)
@@ -68,7 +68,7 @@ MKDIR_P=	/bin/mkdir -p
 MAKESETUP=      $(srcdir)/Modules/makesetup
 
 # Compiler options
-OPT=		-DNDEBUG 
+OPT=		-DNDEBUG -fwrapv -O3 -Wall -Wstrict-prototypes
 BASECFLAGS=	 -fno-strict-aliasing
 CFLAGS=		$(BASECFLAGS) -O2 -Os -fomit-frame-pointer -s $(OPT) $(EXTRA_CFLAGS)
 # Both CPPFLAGS and LDFLAGS need to contain the shell's value for setup.py to
@@ -95,7 +95,7 @@ MACHDEP=	linux2
 MULTIARCH=	
 
 # Install prefix for architecture-independent files
-prefix=		/tmp/ndk-andrewhsieh/buildhost/install/prebuilt/linux-x86_64
+prefix=		/tmp/ndk-andrewhsieh/buildhost/install/prebuilt/linux-x86
 
 # Install prefix for architecture-dependent files
 exec_prefix=	${prefix}
@@ -120,9 +120,9 @@ LIBP=		$(LIBDIR)/python$(VERSION)
 
 # Symbols used for using shared libraries
 SO=		.so
-LDSHARED=	x86_64-linux-gnu-gcc -shared  $(LDFLAGS)
-BLDSHARED=	x86_64-linux-gnu-gcc -shared  $(LDFLAGS)
-LDCXXSHARED=	x86_64-linux-gnu-gcc -shared 
+LDSHARED=	i686-linux-gnu-gcc -shared  $(LDFLAGS)
+BLDSHARED=	i686-linux-gnu-gcc -shared  $(LDFLAGS)
+LDCXXSHARED=	i686-linux-gnu-gcc -shared 
 DESTSHARED=	$(BINLIBDEST)/lib-dynload
 
 # Executable suffix (.exe on Windows and Mac OS X)
@@ -154,7 +154,7 @@ EXEMODE=	755
 FILEMODE=	644
 
 # configure script arguments
-CONFIG_ARGS=	 '--prefix=/tmp/ndk-andrewhsieh/buildhost/install/prebuilt/linux-x86_64' '--build=x86_64-linux-gnu' '--host=x86_64-linux-gnu' '--with-build-sysroot' '--disable-ipv6' 'build_alias=x86_64-linux-gnu' 'host_alias=x86_64-linux-gnu' 'CC=x86_64-linux-gnu-gcc' 'CFLAGS=-O2 -Os -fomit-frame-pointer -s' 'LDFLAGS='
+CONFIG_ARGS=	 '--prefix=/tmp/ndk-andrewhsieh/buildhost/install/prebuilt/linux-x86' '--build=x86_64-linux-gnu' '--host=i686-linux-gnu' '--with-build-sysroot' '--disable-ipv6' 'build_alias=x86_64-linux-gnu' 'host_alias=i686-linux-gnu' 'CC=i686-linux-gnu-gcc' 'CFLAGS=-O2 -Os -fomit-frame-pointer -s' 'LDFLAGS='
 
 
 # Subdirectories with code
@@ -178,7 +178,7 @@ LDLIBRARYDIR=
 INSTSONAME=	$(LDLIBRARY)
 
 
-LIBS=		-lpthread -ldl  -lutil
+LIBS=		-lpthread -ldl  -lpthread -lutil
 LIBM=		-lm
 LIBC=		
 SYSLIBS=	$(LIBM) $(LIBC)
@@ -195,9 +195,9 @@ UNICODE_OBJS=   Objects/unicodeobject.o Objects/unicodectype.o
 PYTHON=		python$(EXE)
 BUILDPYTHON=	python$(BUILDEXE)
 
-PYTHON_FOR_BUILD=./$(BUILDPYTHON) -E
-_PYTHON_HOST_PLATFORM=
-HOST_GNU_TYPE=  x86_64-pc-linux-gnu
+PYTHON_FOR_BUILD=_PYTHON_PROJECT_BASE=$(abs_builddir) _PYTHON_HOST_PLATFORM=$(_PYTHON_HOST_PLATFORM) PYTHONPATH=/tmp/ndk-andrewhsieh/buildhost/install/prebuilt/linux-x86_64/lib/python2.7/lib-dynload:$(shell test -f pybuilddir.txt && echo $(abs_builddir)/`cat pybuilddir.txt`:)$(srcdir)/Lib:$(srcdir)/Lib/plat-$(MACHDEP) /tmp/ndk-andrewhsieh/buildhost/install/prebuilt/linux-x86_64/bin/python2.7
+_PYTHON_HOST_PLATFORM=linux2-i686
+HOST_GNU_TYPE=  i686-pc-linux-gnu
 
 # The task to run while instrument when building the profile-opt target
 PROFILE_TASK=	$(srcdir)/Tools/pybench/pybench.py -n 2 --with-gc --with-syscheck
